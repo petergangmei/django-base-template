@@ -1,0 +1,89 @@
+{%load static%}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Navbar brand -->
+    <a class="navbar-brand me-2" href="{% url 'baseapp:index'%}">
+      <img
+        src="{%static 'img/logo/main.png'%}"
+        height="40"
+        alt="MDB Logo"
+        loading="lazy"
+        style="margin-top: -1px;"
+      />
+      
+    </a>
+
+    <!-- Toggle button -->
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarButtonsExample"
+      aria-controls="navbarButtonsExample"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarButtonsExample">
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'baseapp:index'%}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'baseapp:contact-us'%}">Contact us</a>
+        </li>
+       
+      </ul>
+      <!-- Left links -->
+
+      <div class="d-flex align-items-center">
+       {%if request.user.is_authenticated%}
+       <form action="{%url 'baseapp:logout'%}" method="post">
+        {%csrf_token%}
+        <button  data-mdb-ripple-init type="submit" class="btn btn-primary me-3">
+          Logout
+        </button>
+       </form>
+
+       {%else%}
+       <a href="{%url 'baseapp:login'%}">
+        <button data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2">
+          Login
+        </button>
+      </a>
+      <a href="{%url 'baseapp:signup'%}">
+        <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
+          Sign up for free
+        </button>
+      </a>
+      <a
+        data-mdb-ripple-init
+        class="btn btn-dark px-3"
+        href="https://github.com/petergangmei/django"
+        role="button"
+        target="_blank"
+        ><i class="fab fa-github"></i
+      ></a>
+       {%endif%}
+      </div>
+    </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+{% if messages %}
+<ul class="messages ">
+    {% for message in messages %}
+    <div class="">
+      <li {% if message.tags %} class="{{ message.tags }} ps-5" {% endif %}> <span class="mx-5">{{ message }}</span></li>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
